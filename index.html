@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Más acción, menos reflexión: 2.591: TENDENCIAS IA y aprendizaje</title>
+
+  <!-- fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- MathJax (opcional, se conserva) -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* === VARIABLES Y RESET === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --font-body: 'Merriweather', serif;
+      --font-ui: 'Source Sans 3', system-ui, sans-serif;
+      --color-ink: #1a1a1a;
+      --color-muted: #5c6670;
+      --color-accent: #0056b3;
+      --color-border: #d8dde2;
+      --color-bg-alt: #f8f9fb;
+      --max-width: 1400px;
+      --article-max: 1000px;
+      --sidebar-width: 300px;
+      --gap: 2rem;
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.72;
+      color: var(--color-ink);
+      background: #ffffff;
+      font-size: 1.05rem;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .ui { font-family: var(--font-ui); }
+
+    /* === HEADER STICKY === */
+    header {
+      background: white;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+    }
+
+    .logo {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--color-accent), #6b48ff);
+    }
+
+    .title { font-weight: 700; font-size: 1.35rem; }
+
+    .nav {
+      display: flex;
+      gap: 1.4rem;
+      font-size: 0.95rem;
+    }
+
+    /* === LAYOUT PRINCIPAL === */
+    main { padding: 2rem 0 4rem; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+      gap: var(--gap);
+      align-items: start;
+    }
+
+    article.paper {
+      max-width: var(--article-max);
+      background: white;
+      padding: 1.8rem 2rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+
+    .meta, .authors {
+      color: var(--color-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: white;
+      margin-right: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .abstract {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.4rem;
+      margin: 1.6rem 0;
+    }
+
+    .abstract h2 {font-family: var(--font-ui); font-size: 1.18rem; margin-bottom: 0.6rem; }
+
+    h2.section {
+      font-size: 1.55rem;
+      margin: 2.5rem 0 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    p { margin-bottom: 1.1rem; }
+
+    /* === SIDEBAR === */
+    .side {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .sidebox {
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      line-height: 1.1;
+    }
+
+    .sidebox h3 {
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .toc {
+      list-style: none;
+      font-family: var(--font-ui);
+      font-size: 0.94rem;
+    }
+    .toc li {
+      padding: 0.4rem 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .toc li:last-child { border-bottom: none; }
+    .toc a { color: #4a5568; display: block; }
+    .toc a:hover { color: var(--color-accent); }
+
+    /* === FIGURAS Y TABLAS (iframes) === */
+    .figure, .tablebox {
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      margin: 1.8rem 0;
+    }
+
+    .fig-head {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+      background: white;
+      font-family: var(--font-ui);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-size: 0.92rem;
+    }
+
+    iframe.embed-table {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      background: white;
+      overflow: hidden;
+    }
+
+    iframe.embed-plot {
+      width: 100%;
+      height: 760px;      /* altura generosa para gráficos */
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
+    .caption {
+      padding: 0.8rem 1rem;
+      border-top: 1px solid var(--color-border);
+      background: white;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: var(--color-muted);
+    }
+
+    /* === PREGUNTA DESTACADA === */
+    .pregunta {
+      font-size: 1.25rem;
+      font-style: italic;
+      margin: 1.8rem 0 1.4rem 2.2rem;
+      padding-left: 1.2rem;
+      border-left: 4px solid var(--color-accent);
+      color: #2d3748;
+    }
+
+    /* === TABLAS INLINE (anexos) === */
+    .table-inline {
+      max-height: 420px;
+      overflow: auto;
+      border-top: 1px solid var(--color-border);
+      background: #fff;
+    }
+    .table-inline table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 10px;
+    }
+    .table-inline th,
+    .table-inline td {
+      border: 1px solid #000;
+      padding: 2px 6px;
+      background: #fff;
+      color: #000;
+      white-space: nowrap;
+    }
+    .table-inline th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    /* === ESTILOS AUXILIARES (tablas de resumen, corr, profile) === */
+    table.corr-table, table.profile-table, table.generic {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+    table.corr-table th, table.corr-table td,
+    table.profile-table th, table.profile-table td,
+    table.generic th, table.generic td {
+      border: 1px solid #333;
+      padding: 6px 8px;
+      text-align: center;
+    }
+    table.corr-table thead th, table.profile-table thead th, table.generic thead th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+    table.profile-table tbody th { text-align: left; background-color: #fafafa; font-weight: normal; }
+
+    .corr-note, .profile-note, .footnote {
+      font-size: 13px;
+      margin-top: 8px;
+      color: #333;
+      font-style: italic;
+    }
+
+    /* === ALGORITMO (opcional, se mantiene) === */
+    .alg2e {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 15px;
+      line-height: 1.25;
+      margin: 14px 0;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .side { position: relative; top: auto; }
+      iframe.embed-plot { height: 480px; }
+      iframe.embed-table { height: 340px; }
+      article.paper { padding: 1.4rem 1.6rem; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.85rem; }
+      h2.section { font-size: 1.4rem; }
+      .pregunta { font-size: 1.15rem; margin-left: 1.2rem; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="ui">
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <span class="logo"></span>
+        <div class="title">Duoc UC / SPT</div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="articulo.html">Artículo</a>
+        <a href="#figuras">Figuras</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+<div class="layout">
+
+<article class="paper">
+
+  <!-- TITULO -->
+  <h1>Más acción, menos reflexión: 2.591: TENDENCIAS IA y aprendizaje</h1>
+  <p class="meta ui">Inferencias desde abstracts</p>
+  <div class="authors ui">Rob de la Vega — SPT — Duoc UC</div>
+
+  <div>
+    <span class="badge">Competencia</span>
+    <span class="badge">Acción-objeto-propósito-contexto-tecnología</span>    
+    <span class="badge">Inferencia</span>
+    <span class="badge">Abstracts/journal</span>
+    <span class="badge">
+      <a href="https://huggingface.co/Qwen/Qwen2.5-17B-Instruct" target="_blank" rel="noopener noreferrer">
+        <!-- <object type="image/svg+xml" data="qwen.svg" width="20" height="20"></object> -->
+        <span>Ir a Qwen 2.5 14B</span>
+      </a>
+    </span>
+  </div>
+
+  <!-- SECCIÓN: PREGUNTA GUÍA -->
+  <section class="abstract" id="pregunta guía">
+    <h2 class="ui">Pregunta guía:</h2>
+    <div class="pregunta guía">
+      <em>¿Cómo se conceptualiza en la literatura científica (2025) la relación entre aprendizaje humano e IA?</em>
+    </div>
+  </section>
+
+
+  <section>
+    <p>La acelerada incorporación de inteligencia artificial en el ámbito educativo ha generado una proliferación de investigaciones que describen, experimentan y modelan su relación con el aprendizaje humano. Sin embargo, más allá de los resultados empíricos reportados, existe una pregunta previa de carácter epistemológico: ¿cómo está siendo conceptualizado el aprendizaje cuando se articula con IA dentro del discurso científico reciente? Este estudio aborda esa cuestión mediante un análisis inferencial de abstracts publicados en 2025, procesados con el modelo Qwen 2.5 14B para extraer desde la estructura de la competencia = Acción, objeto, propósito, contexto, tecnología.</p>
+</section>
+
+ <section id="dos">
+    <h2 class="ui">¿Este tipo de investigación es útil en el ámbito académico y docencia?</h2>
+
+    <p>Es especialmente útil porque ofrece algo que rara vez tenemos al diseñar o ajustar un currículo y pensar la didáctica en aula: una radiografía estructural del discurso académico que alimenta nuestras decisiones formativas. En lugar de basarnos solo en tendencias, intuiciones o modas tecnológicas, aquí contamos con evidencia sobre cómo se está conceptualizando el aprendizaje mediado por IA en la literatura especializada. Si el análisis muestra sobrerrepresentación de la acción y debilidad en propósito o tecnología, eso no es un dato anecdótico: es una señal de posibles vacíos que podrían replicarse en nuestras propias formulaciones de competencias y resultados de aprendizaje. Para el docente, esto significa poder revisar programas, rúbricas y actividades con un criterio más fino: ¿estamos describiendo solo lo que el estudiante hace, o también qué transforma, con qué sentido y en qué contexto? Además, la cartografía ontológica permite anticipar riesgos de fragmentación conceptual y promover diseños integrados desde el inicio. En síntesis, no se trata de seguir a la IA, sino de entender cómo el campo la está pensando y decidir pedagógicamente, con mayor conciencia estructural, cómo incorporarla en la formación profesional.</p>
+
+ <section id="tres">
+    <h2 class="ui">¿Por qué se elige el modelo Qwen 2.5 14b y no ChatGPT u otro?</h2>
+
+    <p>Se selecciona Qwen 2.5 14B por un equilibrio poco común entre capacidad, eficiencia y apertura. Ofrece buen rendimiento en comprensión y generación académica, maneja contextos extensos y mantiene tiempos de respuesta razonables sin exigir infraestructura desproporcionada. Frente a modelos más grandes, reduce costo computacional, frente a modelos pequeños, conserva profundidad semántica. Además, su <strong>disponibilidad abierta</strong> permite reproducibilidad, ajuste fino y control institucional. En un entorno formativo, no basta potencia bruta: importa trazabilidad, estabilidad y posibilidad de integración técnica sostenible.</p>
+ </section>
+
+    <picture>
+      <source srcset="archivo.webp" type="image/webp" />
+      <img src="archivo.jpg" alt="Modelo Qwen 2.5-14B" width="800" height="500" style="max-width:100%; height:auto; margin:10px 0;" />
+      <figcaption class="ui" style="font-size:0.9rem; color:var(--color-muted);">
+        En la imagen se observa el modelo Qwen 2.5-14B usado para las inferencias desde abstracts. Atención dispersa vs completa: Time to First Token (TTFT) a 1M de contexto cae de &gt;700 s a ~110 s (mejora ~6.7×). La brecha crece con la longitud del contexto.
+      </figcaption>
+    </picture>
+    <br>
+
+ <section id="cuatro">
+    <h2 class="ui">¿El prompt requiere un concepto preciso de competencia?</h2>
+ </section>
+
+    <p>En un campo donde "competencia" ha sido definida de maneras tan diversas, desde repertorios conductuales observables hasta combinaciones abstractas de conocimientos, habilidades y actitudes, adoptar una estructura lingüística explícita como Acción, Objeto, Propósito, Contexto, Tecnología no es solo formalidad, sino una decisión metodológica. Frente a la ambigüedad conceptual, la gramática ofrece un ancla estable: toda competencia formulable implica alguien que hace algo, sobre algo, para algo, en determinadas condiciones y mediante ciertos medios. Esta matriz no reduce la complejidad, más bien la ordena. Permite comparar definiciones heterogéneas bajo un mismo esquema analítico, detectar omisiones (por ejemplo, ausencia de propósito o invisibilización tecnológica) y evaluar niveles de integración. Además, desplaza la discusión desde declaraciones abstractas hacia estructuras verificables en el lenguaje real: como ocurre en los abstracts académicos o en los resultados de aprendizaje. También facilita el análisis empírico y modelamiento computacional. Esta aproximación ayuda a distinguir competencia de <strong>habilidad</strong>. Una habilidad puede describirse como la capacidad de ejecutar una acción específica con destreza ("analizar datos", "redactar informes"), pero no necesariamente explicita objeto delimitado, finalidad profesional, contexto de aplicación ni mediaciones tecnológicas. La competencia, en cambio, exige <strong>articulación estructural</strong>: no basta con saber hacer. Importa qué se transforma, con qué intención, en qué escenario y bajo qué condiciones. Así, la competencia posee densidad semántica y orientación teleológica que la habilidad aislada no siempre contiene. Esta diferencia no es retórica, tiene consecuencias curriculares. Mientras las habilidades pueden entrenarse como procedimientos relativamente descontextualizados, las competencias requieren integración situada y coherencia multidimensional. Por eso, ante la proliferación de definiciones, una estructura lingüística explícita no empobrece el concepto: lo vuelve operable, comparable y pedagógicamente exigente.</p>
+
+    <figure style="max-width:1000px;margin:1rem auto;text-align:center">
+      <img src="competencia.png" alt="Diagrama AOPCT: Acción–Objeto–Propósito–Contexto–Tecnología" style="width:100%;height:auto">
+      <figcaption style="font-size:.9rem;opacity:.8">
+        Estructura lingüística de la competencia (A–O–P–C–T) y relaciones semánticas.
+      </figcaption>
+    </figure>
+  </section>
+
+
+  <section id="cinco">
+    <h2 class="ui">¿Cómo se distribuyen las dimensiones de la competencia = Acción, Objeto, Propósito, Contexto, Tecnología?</h2>
+
+    <p>La tabla muestra cómo se distribuyen cuantitativamente esas dimensiones y qué tan equilibradas están entre sí. Permite identificar cuál domina (por ex, Acción), cuáles aparecen menos desarrolladas (como Tecnología u Objeto) y cuál es el nivel de integración global. No es un resumen temático, sino un análisis estructural del lenguaje.
+    </p>
+
+
+    <div class="tablebox">
+    <div class="fig-head">
+    <div class="label ui">Tabla 1: Resultados inferencias / Qwen2.5:14b (Vista Compacta)</div>
+    <div class="note ui">scroll desplazamiento</div>
+    </div>
+    <iframe class="embed-table" src="1.html" loading="lazy" scrolling="no" id=seis></iframe>
+    <div class="caption ui">Lo que estamos haciendo es usar IA para analizar la forma en que se construyen las ideas, no solo su contenido. El modelo identifica patrones lingüísticos en cientos o miles de abstracts y mide su coherencia estructural. Esto permite evaluar si las competencias formuladas están completas o fragmentadas. En vez de basarnos solo en percepción pedagógica, contamos con evidencia empírica sobre cómo se articula la acción, el propósito, el contexto y la tecnología en el discurso académico. Recorra la tabla y estudie los resultados.
+    </div>
+    </div>
+
+    <p>A partir de los pesos relativos de cada dimensión inferida por el modelo. Esos valores se normalizan y se transforman en coordenadas baricéntricas dentro de un tetraedro regular. El resultado permite visualizar densidad, clústeres y desplazamientos temporales del campo. ¿Qué cubre esta representación? Analiza la forma conceptual del discurso académico: equilibrio, fragmentación, integración ontológica. ¿Qué no es? No mide calidad pedagógica, no evalúa impacto en aula, no juzga eficacia didáctica. Es un análisis estructural del lenguaje académico, no una auditoría educativa.
+    </p>
+
+    <h2 class="ui" id=siete>¿Qué se evidencia en la Tabla 1?</h2>
+    </section>
+    <p>Se evidencia una asimetría estructural clara en el discurso académico sobre aprendizaje e inteligencia artificial. De los 2591 abstracts analizados, 67,3% presenta <strong>dominancia en la dimensión Action</strong>, lo que confirma un énfasis marcado en procesos, intervenciones y operaciones técnicas por sobre otras dimensiones conceptuales. En contraste, Object alcanza 17,8%, mientras que Purpose, Context y Technology se sitúan bajo el 7%, mostrando una presencia significativamente menor como eje organizador del discurso. La síntesis se presenta en la Tabla 2.
+    </p> 
+
+    <section id="dimension">
+    <div class="tablebox">
+    <div class="fig-head">
+    <div class="label ui" id="ocho">Tabla 2: Distribución de dimensiones dominantes en abstracts (Inferencias AOPCT, 2025)</div>
+    </div>
+    <table class="profile-table">
+    <thead><tr><th>Dimensión dominante</th><th>N° abstracts</th><th>Porcentaje (%)</th></tr></thead>
+    <tbody>
+    <tr><th>Action</th><td>1745</td><td>67.3</td></tr>
+    <tr><th>Object</th><td>460</td><td>17.8</td></tr>
+    <tr><th>Purpose</th><td>157</td><td>6.1</td></tr>
+    <tr><th>Context</th><td>124</td><td>4.8</td></tr>
+    <tr><th>Technology</th><td>105</td><td>4.1</td></tr>
+    </tbody>
+    </table>
+    <p class="profile-note">Nota. La dimensión dominante corresponde a la categoría AOPCT con mayor peso semántico inferido por abstract. Se observa una fuerte concentración en "Action", lo que indica predominio de formulaciones centradas en operaciones o procesos técnicos dentro del discurso científico sobre aprendizaje e inteligencia artificial. Total de abstracts analizados: 2591.
+    </p>
+    </div>
+
+    <p>Este patrón sugiere que la literatura tiende a describir qué se hace y cómo se implementa, pero dedica menor centralidad a explicitar con precisión qué se transforma, con qué finalidad última, en qué condiciones específicas o bajo qué mediaciones tecnológicas críticas. Académicamente, esto revela una orientación predominantemente <strong>operativa del campo</strong>. Desde una perspectiva formativa, la tabla invita a revisar cómo se están formulando competencias y resultados de aprendizaje, ya que el predominio de la acción podría estar reproduciendo un enfoque instrumental más que integral del aprendizaje mediado por IA.
+    </p>
+
+    <h2 class="ui" id="nueve">¿Cómo se relaciona aprendizaje - IA?</h2>
+    <p>A partir de la tabla de resultados no se queda en porcentajes, se da un paso más: construir una cartografía ontológica. El gráfico tetraédrico traduce la estructura Acción – Objeto – Propósito – Contexto (con Tecnología como tensión transversal) en un espacio tridimensional. Cada vértice representa una dimensión y cada abstract se proyecta como un punto dentro del volumen. Cuanto más cerca del centro, mayor integración estructural, cuanto más cercano a un vértice, mayor especialización o desequilibrio. No es una metáfora: es una modelización geométrica de coherencia conceptual. El Tetraedro a continuación ayuda a comprender esta configuración de relaciones.
+    </p>
+    </section>
+
+    <section class="abstract" id="tetraedro">
+    <h2 class="section">Tetraedro</h2>
+    <p>La visualización mediante el tetraedro permite proyectar cada abstract como una configuración cognitiva en un espacio tridimensional donde las dimensiones interactúan dinámicamente. La distancia al centro refleja el grado de integración entre acción, objeto, propósito, contexto y tecnología, mientras que la distribución global revela tensiones entre especialización técnica y articulación pedagógica.
+    </p>
+    
+    <div class="figure" id="fig-tetraedro">
+    <div class="fig-head">
+    <div class="label ui">Figura 1</div>
+    <div class="note ui">Tetraedro CLICK y rotación, zoom</div>
+    </div>
+    <iframe class="embed-plot" src="tetraedro.html" loading="lazy"></iframe>
+    <div class="caption ui">Figura 1. Desde la perspectiva didáctica, comprender esta cartografía conceptual resulta especialmente relevante para la docencia. Los docentes no solo implementan tecnologías. También interpretan marcos discursivos que orientan prácticas, currículos y expectativas formativas. Si los abstracts muestran predominio de acciones técnicas (optimizar, predecir, modelar) y objetos cuantificables (rendimiento, datos, desempeño), ello sugiere una conceptualización instrumental del aprendizaje. Identificar este sesgo permite problematizar la integración curricular de la IA y promover enfoques más equilibrados que articulen procesos cognitivos, reflexivos y socioculturales. Así, un estudio como este contribuye a la didáctica no ofreciendo recetas, sino proporcionando una comprensión estructural de cómo el aprendizaje humano está siendo redefinido, o tensionado, por la inteligencia artificial en el discurso científico actual.</div>
+    </div>
+
+    <p>El tetraedro representado en la visualización sintetiza de forma geométrica la estructura AOPCT como sistema integrado. Cada vértice encarna una dimensión constitutiva: Acción, Objeto, Propósito y Contexto (con Tecnología operando como tensión transversal). Su separación espacial muestra que ninguna dimensión se reduce a otra. Un tetraedro, a diferencia de un plano, obliga a pensar en <strong>profundidad</strong>. No basta con moverse en dos ejes: toda variación afecta al conjunto. Es una metáfora estructural de equilibrio ontológico.
+    </p>
+
+    <p>La clave no está en los vértices aislados, sino en las aristas y las caras. Cada arista representa la relación directa entre dos dimensiones (por ejemplo, Acción–Propósito o Objeto–Contexto), y cada cara triangular muestra una integración parcial. Cuando un abstract o diseño curricular se desplaza hacia un vértice, el volumen efectivo del tetraedro disminuye: hay especialización, pero se pierde integración. En cambio, cuanto más centrado está el punto dentro del volumen, mayor equilibrio multidimensional. El índice de integración calculado puede entenderse precisamente como proximidad al centro geométrico del sólido.
+    </p>
+
+    <p>Finalmente, el tetraedro es la forma tridimensional mínima capaz de generar volumen. Con cuatro puntos bien tensionados aparece estructura. Si una dimensión se debilita, como propósito o tecnología en tus datos recientes, el sólido se deforma. No colapsa de inmediato, pero pierde estabilidad conceptual. Para la docencia, la imagen es poderosa: enseñar con IA no es moverse sobre una línea de acción eficiente, sino sostener un volumen formativo donde acción, objeto, propósito y contexto se articulan en <strong>equilibrio</strong>. Sin ese volumen, hay actividad, y con él, hay aprendizaje con sentido.</p>
+    </section>
+
+    <h2 class="ui" id="diez">¿Qué se concluye desde la observación de la gráfica?</h2>
+
+    <p>La representación tetraédrica ofrece una primera conclusión clara: el campo del aprendizaje mediado por IA no se distribuye de manera homogénea entre sus dimensiones constitutivas. La mayor concentración de puntos hacia el vértice de <strong>Acción confirma la sobrerrepresentación</strong> operativa ya detectada en la tabla, mientras que el desplazamiento relativo desde Propósito y Tecnología evidencia una integración parcial más que estructural. El volumen efectivo ocupado por los abstracts no llena el sólido; se agrupa en zonas específicas, lo que sugiere especialización y no equilibrio ontológico. Esto indica que el discurso académico tiende a describir intervenciones y procesos con mayor énfasis que la explicitación del sentido, las condiciones o la mediación tecnológica crítica. Sin embargo, también se observan núcleos más centrados que muestran que <strong>la integración es posible</strong> y no excepcional. El tetraedro, por tanto, no solo visualiza fragmentación, sino también potencial de articulación. En términos preliminares, la cartografía confirma que el campo está en transición: existe conciencia contextual y teleológica moderada, pero aún no consolidada en una estructura plenamente integrada.
+    </p>
+
+    <section id="once">
+    <h2 class="ui">¿Por qué se agrega un mapa ontológico de las inferencias?</h2>
+
+    <p>El Mapa Ontológico de Revistas — IA y Aprendizaje permite entender algo que el tetraedro no muestra por sí solo: no solo cómo se estructuran los abstracts, sino cómo se posicionan las revistas dentro del campo epistemológico.
+    </p>
+
+    <div class="figure" id="fig-mapa">
+    <div class="fig-head">
+    <div class="label ui">Figura 2: Mapa Ontológico de revistas</div>
+    <div class="note ui">Mapa interactivo despliega información</div>
+    </div>
+    <iframe class="embed-plot" src="mapa.html" loading="lazy"></iframe>
+    <div class="caption ui">Figura 2. Mientras el tetraedro analiza integración interna (equilibrio A–O–P–C–T), el mapa cruza dos métricas estratégicas: Cohesión Ontológica (ODI) en el eje X y Diversidad Conceptual (Entropía léxica) en el eje Y. Esto genera cuadrantes interpretativos: campo maduro (alta cohesión, menor dispersión), alta complejidad (alta cohesión y alta diversidad), exploración conceptual y campo emergente.
+    </div>
+    </div>
+
+    <h2 class="ui" id="doce">En concreto, ¿Qué aporta un mapa de ese tipo?</h2>
+
+    <p>Permite detectar ecosistemas discursivos. No todas las revistas conceptualizan la IA educativa del mismo modo: algunas consolidan marcos coherentes, otras experimentan con vocabularios más dispersos. Así, el mapa ayuda a identificar núcleos estabilizados, zonas innovadoras y áreas fragmentadas.
+    </p>
+
+    <h2 class="ui" id="trece">¿Para qué no sirve este mapa?</h2>
+
+    <p>No evalúa calidad científica ni impacto pedagógico. No clasifica "mejores" o "peores" revistas. Lo que hace es más fino: revela la arquitectura conceptual dominante y su grado de madurez estructural. Es una cartografía del pensamiento del campo, no un ranking académico.
+    </p>
+
+    <h2 class="ui" id="catorce">¿Qué hay en este mapa?</h2>
+
+    <p>El mapa ontológico de revistas muestra que el campo de IA y aprendizaje no es homogéneo, sino estratificado en niveles de madurez conceptual. La coexistencia de zonas de "campo maduro" y "alta complejidad" indica que existen núcleos consolidados donde la cohesión ontológica es alta (marcos conceptuales relativamente estables) junto a espacios donde la diversidad léxica crece y el discurso se expande en múltiples direcciones. Esto sugiere que el campo no está en crisis, pero sí en <strong>tensión evolutiva</strong>: se consolida mientras explora. Académicamente, el hallazgo es relevante porque permite diferenciar especialización fragmentada de complejidad integrada. No toda diversidad implica dispersión. Puede señalar sofisticación conceptual cuando se acompaña de cohesión estructural.
+    </p>
+
+    <p>Para la docencia, el mapa ofrece una herramienta estratégica. Permite seleccionar fuentes no solo por prestigio, sino por su posición epistemológica: revistas maduras para fundamentos sólidos, zonas de alta complejidad para innovación y discusión crítica. Además, advierte sobre áreas emergentes donde los marcos aún no están estabilizados, lo que exige mayor rigor en la transposición didáctica. En síntesis, el mapa no clasifica revistas; orienta decisiones formativas informadas sobre qué discurso académico estamos incorporando al currículo y con qué nivel de coherencia conceptual.
+    </p>
+    </section>
+
+   
+    <section class="ui" id="conclusiones">
+    <h2>Conclusión final</h2>
+    <!-- conclusiones (lista) -->
+    <p><strong>La acción domina el discurso:</strong> Hallazgo: Acción es dominante en el 67.3% de los abstracts (media = 0.676). Implicación: La investigación se centra en el hacer (procesos e intervenciones) más que en objeto, propósito, contexto o tecnología. Recomendación para la docencia: Introducir equilibrio mediante preguntas explícitas sobre objeto, propósito y contexto para el diseño de competencias.</p>
+    <p><strong>Tecnología y objeto son los grandes ausentes:</strong> Hallazgo: Tecnología (0.488) y Objeto (0.486) presentan los valores más bajos y menor dominancia. Implicación: La tecnología aparece como medio implícito más que como objeto de análisis; los objetos de estudio están poco definidos. Recomendación: Fortalecer análisis tecnológico y delimitación conceptual en formación investigativa.</p>
+    <p><strong>Propósito y contexto se mantienen estables:</strong> Hallazgo: Propósito (~0.579) y Contexto (~0.594) cercanos al equilibrio. Implicación: Existe conciencia moderada del para qué y dónde del aprendizaje con IA. Recomendación para la docencia: Usarlos como ejes articuladores para integrar dimensiones.</p>
+    <p><strong>Correlaciones débiles implican independencia dimensional:</strong> Hallazgo: Correlaciones inferiores a 0.12. Implicación: Las dimensiones funcionan como vectores independientes; los estudios tienden a especializarse. Recomendación para la docencia: Diseñar proyectos formativos que obliguen integración AOPCT.</p>
+    <p><strong>Caída de Propósito y Tecnología en 2026:</strong> Hallazgo: Descensos cercanos al 12%. Implicación: Pérdida de reflexión teleológica y tecnológica en estudios recientes. Recomendación: Reforzar propósito y tecnología en diseños actuales.</p>
+    <p><strong>Acción sigue sobrerrepresentada, pero decrece:</strong> Hallazgo: Disminuye de 0.68 (2025) a 0.65 (2026). Implicación: Inicio de corrección hacia mayor equilibrio conceptual. Recomendación: Consolidar esta transición mediante rúbricas multidimensionales.</p>
+    <p><strong>Integración media baja:</strong> Hallazgo: Índice promedio = 0.47 (máx. 0.732). Implicación: La mayoría de abstracts en 2025 - 2026 están lejos del equilibrio ontológico ideal. Recomendación: Usar casos altamente integrados como modelos didácticos.</p>
+    <p><strong>Los abstracts más integrados pertenecen a 2025:</strong> Hallazgo: 9 de 10 abstracts mejor integrados provienen de ese año. Implicación: La integración no aumenta con el tiempo; puede estar disminuyendo. Recomendación curricular: Analizar causas de especialización creciente.</p>
+    <p><strong>Acción como puerta de entrada a la integración:</strong> Hallazgo: Todos los abstracts top presentan Action muy alto (0.78–0.80). Implicación: La acción funciona como eje organizador para integrar dimensiones restantes. Recomendación: Enseñar integración progresiva desde la acción.</p>
+    <p><strong>Tecnología como factor variable:</strong> Hallazgo: Alta variabilidad en abstracts integrados (0.399–0.517). Implicación: La tecnología no determina integración; lo decisivo es el equilibrio global. Recomendación: Priorizar balance conceptual antes que énfasis tecnológico.</p>
+
+    <!-- TABLA RESUMEN HORIZONTAL -->
+    <h3 style="text-align:center; margin-top:40px;">Tabla Resumen de Hallazgos</h3>
+    <table class="generic">
+    <thead>
+    <tr><th>#</th><th>Conclusión</th><th>Dato clave</th><th>Impacto curricular</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1</td><td>Acción domina</td><td>67.3%</td><td>Equilibrar dimensiones</td></tr>
+    <tr><td>2</td><td>Tecnología y objeto bajos</td><td>≈0.48</td><td>Formación específica</td></tr>
+    <tr><td>3</td><td>Propósito/contexto estables</td><td>≈0.58</td><td>Articuladores</td></tr>
+    <tr><td>4</td><td>Independencia dimensional</td><td>r &lt; 0.12</td><td>Diseñar integración</td></tr>
+    <tr><td>5</td><td>Caída propósito / tecnología</td><td>-12%</td><td>Alertar tendencia</td></tr>
+    <tr><td>6</td><td>Corrección Acción</td><td>0.68→0.65</td><td>Rúbricas equilibrio</td></tr>
+    <tr><td>7</td><td>Integración baja</td><td>0.47</td><td>Modelos top</td></tr>
+    <tr><td>8</td><td>Integrados 2025</td><td>9/10</td><td>Analizar causas</td></tr>
+    <tr><td>9</td><td>Acción puerta</td><td>0.78–0.80</td><td>Expandir desde acción</td></tr>
+    <tr><td>10</td><td>Tecnología variable</td><td>Alta varianza</td><td>Priorizar equilibrio</td></tr>
+    </tbody>
+    </table>
+
+    <p style="margin-top:30px; font-size:15px;">
+    <strong>Mensaje central.</strong> El campo de IA y aprendizaje aparece dominado por la acción, con tecnología y objeto subdesarrollados y señales de desintegración reciente. Sin embargo, existen modelos de alta integración que demuestran que el equilibrio ontológico es alcanzable. El desafío curricular consiste en formar investigadores capaces de integrar dimensiones, evitando especializaciones fragmentarias.
+    </p>
+    </section>
+
+    <h2 class="section" id="bibliografia">Bibliografía</h2>
+    <ul>
+    <li>Arstorp, A.-T. (2025). <i>An ontological turn: being and becoming with digital technologies in education</i>. Cogent Education, 12(1), 2572384. <a href="https://doi.org/10.1080/2331186X.2025.2572384" target="_blank">https://doi.org/10.1080/2331186X.2025.2572384</a></li>
+    <li>Adewojo, A. A. (2025). <i>Beyond the Physical: Exploring the Ontological Implications of Future Classrooms in Digital and AI-Mediated Spaces</i>. Digital Education Review, (47), 1–13. <a href="https://dialnet.unirioja.es/servlet/articulo?codigo=10245980" target="_blank">Ver en Dialnet</a></li>
+    <li>Floridi, L. (2025). <i>The Ethics of Artificial Intelligence: Principles, Challenges, and Opportunities</i>. Oxford University Press.</li>
+    <li>Holmes, W., & Tuomi, I. (2025). <i>State of the art and future directions of AI in education: A systematic ontological review</i>. International Journal of Artificial Intelligence in Education, 35(1), 112–145.</li>
+    <li>Knox, J. (2026). <i>Posthumanism and the Digital University: Being and Learning in the Age of Algorithms</i>. Springer Nature.</li>
+    <li>Luckin, R. (2025). <i>Intelligence Unleashed: An Ontological Framework for AI in Education</i>. UCL Press. https://doi.org/10.2307/j.ctv33eb0</li>
+    <li>Nguyen, A. (2025). <i>Human-AI Shared Regulation for Hybrid Intelligence in Learning and Teaching: Conceptual Domain, Ontological Foundations, Propositions, and Implications for Research</i>. Proceedings of the 58th Hawaii International Conference on System Sciences (HICSS), 34–43. <a href="https://doi.org/10.24251/HICSS.2025.006" target="_blank">https://doi.org/10.24251/HICSS.2025.006</a></li>
+    <li>Patania, S., et al. (2025). <i>Dialogic Social Learning for Artificial Agents: Enhancing LLM Ontology Acquisition through Mixed-Initiative Educational Interactions</i>. arXiv:2507.21065. [Aceptado en ICSR2025]. <a href="https://arxiv.org/abs/2507.21065" target="_blank">https://arxiv.org/abs/2507.21065</a>
+    </li>
+    <hr/>
+    </ul>
+    <hr />
+
+
+</article>
+
+      <aside class="side">
+      <div class="sidebox">
+      <h3 class="ui">Contenido</h3>
+      <ul class="toc">
+      <li><a href="#resumen">Pregunta guía</a></li>
+      <li><a href="#dos">Utilidad</a></li>
+      <li><a href="#tres">Modelo IA</a></li>
+      <li><a href="#cuatro">Precisión Modelo</a></li>    
+      <li><a href="#cinco">Dimensiones Competencia</a></li>  
+      <li><a href="#seis">Tabla 1</a></li>  
+      <li><a href="#siete">Evidencia inferencia</a></li> 
+      <li><a href="#ocho">Tabla 2</a></li> 
+      <li><a href="#nueve">Relación Aprendizaje - IA</a></li> 
+      <li><a href="#tetraedro">Figura Tetraedro</a></li>  
+      <li><a href="#diez">Conclusión parcial</a></li>  
+      <li><a href="#once">Mapa ontológico</a></li>  
+      <li><a href="#fig-mapa">Figura Mapa</a></li> 
+      <li><a href="#doce">Aporte Mapa</a></li> 
+      <li><a href="#trece">Utilidad</a></li> 
+      <li><a href="#catorce">Conclusión Mapa Ontológico</a></li> 
+      <li><a href="#conclusiones">Conclusión final</a></li>
+      <li><a href="#bibliografia">Bibliografía</a></li>
+    </ul>
+    <p class="ui" style="margin-top:1rem; font-size:0.88rem; color:#6b7280;"><strong></strong></p>
+  </div>
+</aside>
+
+</div> <!-- .layout -->
+</div> <!-- .wrap -->
+</main>
+</body>
+</html>
